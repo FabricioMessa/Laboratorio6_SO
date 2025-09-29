@@ -59,8 +59,7 @@ void fcfs(Proceso procesos[], int n) {
     }
 
     printf("---------------------------------------------------------------\n");
-    printf("P |          |        |        |     | %9.2f | %7.2f | %6.2f\n\n",
-           sum_response / n, sum_turnaround / n, sum_waiting / n);
+    printf("P |          |        |        |     | %9.2f | %7.2f | %6.2f\n\n", sum_response / n, sum_turnaround / n, sum_waiting / n);
 
     printf("FCFS - Diagrama de Gantt:\n");
     for (int t = 0; t < tiempo_total; t++) {
@@ -72,6 +71,9 @@ void fcfs(Proceso procesos[], int n) {
         }
     }
     printf("[%d]\n", tiempo_total);
+
+    printf("Average Waiting Time: %.2f\n", sum_waiting / n);
+    printf("Average Turnaround Time: %.2f\n", sum_turnaround / n);
 }
 
 /*============================================================================================*/
@@ -156,6 +158,9 @@ void sjf(Proceso procesos[], int n) {
         }
     }
     printf("[%d]\n", tiempo_total);
+
+    printf("Average Waiting Time: %.2f\n", sum_waiting / n);
+    printf("Average Turnaround Time: %.2f\n", sum_turnaround / n);
 }
 
 /*============================================================================================*/
@@ -248,6 +253,9 @@ void stcf(Proceso procesos[], int n) {
         }
     }
     printf("[%d]\n", tiempo_total);
+
+    printf("Average Waiting Time: %.2f\n", sum_waiting / n);
+    printf("Average Turnaround Time: %.2f\n", sum_turnaround / n);
 }
 
 /*============================================================================================*/
@@ -364,4 +372,7 @@ void round_robin(Proceso procesos[], int n, int quantum) {
     }
     
     printf("[%d]\n", tiempo_total);
+
+    printf("Average Waiting Time: %.2f\n", sum_waiting / n);
+    printf("Average Turnaround Time: %.2f\n", sum_turnaround / n);
 }
