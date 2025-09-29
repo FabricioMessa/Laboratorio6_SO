@@ -261,7 +261,8 @@ void stcf(Proceso procesos[], int n) {
 /*============================================================================================*/
 /*======================================= RR =================================================*/
 /*============================================================================================*/
-void round_robin(Proceso procesos[], int n, int quantum) {
+void round_robin(Proceso procesos[], int n, int quantum)
+{
     Resultado resultados[MAX_PROCESOS];
     int tiempos_restantes[MAX_PROCESOS];
     int completados[MAX_PROCESOS] = {0};
@@ -273,7 +274,8 @@ void round_robin(Proceso procesos[], int n, int quantum) {
     int gantt[1000];
     memset(gantt, -1, sizeof(gantt));
 
-    for (int i = 0; i < n; i++) {
+    for (int i = 0; i < n; i++)
+    {
         tiempos_restantes[i] = procesos[i].burst_time;
         resultados[i].id = procesos[i].id;
         resultados[i].arrival_time = procesos[i].arrival_time;
@@ -281,19 +283,25 @@ void round_robin(Proceso procesos[], int n, int quantum) {
         resultados[i].start_time = -1;
     }
 
-    for (int i = 0; i < n; i++) {
-        if (procesos[i].arrival_time == 0) {
+    for (int i = 0; i < n; i++)
+    {
+        if (procesos[i].arrival_time == 0)
+        {
             cola[fin++] = i;
             en_cola[i] = 1;
         }
     }
 
-    while (procesos_restantes > 0) {
-        if (frente == fin) {
+    while (procesos_restantes > 0)
+    {
+        if (frente == fin)
+        {
             gantt[tiempo_actual] = -1;
             tiempo_actual++;
-            for (int i = 0; i < n; i++) {
-                if (!en_cola[i] && procesos[i].arrival_time <= tiempo_actual && tiempos_restantes[i] > 0) {
+            for (int i = 0; i < n; i++)
+            {
+                if (!en_cola[i] && procesos[i].arrival_time <= tiempo_actual && tiempos_restantes[i] > 0)
+                {
                     cola[fin++] = i;
                     en_cola[i] = 1;
                 }
@@ -303,13 +311,15 @@ void round_robin(Proceso procesos[], int n, int quantum) {
 
         int idx = cola[frente++];
 
-        if (resultados[idx].start_time == -1) {
+        if (resultados[idx].start_time == -1)
+        {
             resultados[idx].start_time = tiempo_actual;
             resultados[idx].response_time = tiempo_actual - procesos[idx].arrival_time;
         }
 
         int tiempo_ejecucion = (tiempos_restantes[idx] < quantum) ? tiempos_restantes[idx] : quantum;
-        for (int i = 0; i < tiempo_ejecucion; i++) {
+        for (int i = 0; i < tiempo_ejecucion; i++)
+        {
             gantt[tiempo_actual + i] = procesos[idx].id;
         }
 
@@ -317,22 +327,28 @@ void round_robin(Proceso procesos[], int n, int quantum) {
         int tiempo_previo = tiempo_actual;
         tiempo_actual += tiempo_ejecucion;
 
-        for (int t = 1; t <= tiempo_ejecucion; t++) {
-            for (int i = 0; i < n; i++) {
-                if (!en_cola[i] && procesos[i].arrival_time == tiempo_previo + t && tiempos_restantes[i] > 0) {
+        for (int t = 1; t <= tiempo_ejecucion; t++)
+        {
+            for (int i = 0; i < n; i++)
+            {
+                if (!en_cola[i] && procesos[i].arrival_time == tiempo_previo + t && tiempos_restantes[i] > 0)
+                {
                     cola[fin++] = i;
                     en_cola[i] = 1;
                 }
             }
         }
 
-        if (tiempos_restantes[idx] == 0) {
+        if (tiempos_restantes[idx] == 0)
+        {
             completados[idx] = 1;
             procesos_restantes--;
             resultados[idx].finish_time = tiempo_actual;
             resultados[idx].turnaround_time = resultados[idx].finish_time - procesos[idx].arrival_time;
             resultados[idx].waiting_time = resultados[idx].turnaround_time - resultados[idx].burst_time;
-        } else {
+        }
+        else
+        {
             cola[fin++] = idx;
         }
     }
@@ -343,7 +359,8 @@ void round_robin(Proceso procesos[], int n, int quantum) {
     printf("ID | Llegada | Rafaga | Inicio | Fin | Respuesta | Retorno | Espera\n");
     printf("---------------------------------------------------------------\n");
     double sum_response = 0, sum_turnaround = 0, sum_waiting = 0;
-    for (int i = 0; i < n; i++) {
+    for (int i = 0; i < n; i++)
+    {
         printf("%2d | %7d | %6d | %6d | %3d | %9d | %7d | %6d\n",
                resultados[i].id,
                resultados[i].arrival_time,
@@ -362,17 +379,36 @@ void round_robin(Proceso procesos[], int n, int quantum) {
     printf("P |          |        |        |     | %9.2f | %7.2f | %6.2f\n\n", sum_response / n, sum_turnaround / n, sum_waiting / n);
 
     printf("Round Robin - Diagrama de Gantt:\n");
-    for (int t = 0; t < tiempo_total; t++) {
+    for (int t = 0; t < tiempo_total; t++)
+    {
         printf("[%d]", t);
-        if (gantt[t] == -1) {
+        if (gantt[t] == -1)
+        {
             printf("--IDLE--");
-        } else {
+        }
+        else
+        {
             printf("--P%d--", gantt[t]);
         }
     }
-    
     printf("[%d]\n", tiempo_total);
 
     printf("Average Waiting Time: %.2f\n", sum_waiting / n);
     printf("Average Turnaround Time: %.2f\n", sum_turnaround / n);
+
+    int context_switches = 0;
+    int last_process = -2; 
+    for (int t = 0; t < tiempo_total; t++)
+    {
+        int actual = gantt[t];
+        if (actual != last_process && actual != -1)
+        {
+            if (last_process != -2 && last_process != -1)
+            {
+                context_switches++;
+            }
+        }
+        last_process = actual;
+    }
+    printf("Context Switches: %d\n", context_switches);
 }
