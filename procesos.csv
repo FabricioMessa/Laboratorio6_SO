@@ -3,3 +3,5 @@ ID,Arrival,Burst
 2,1,4
 3,2,2
 4,3,3
+
+g++ main.c planificadores.c -o planificadores
