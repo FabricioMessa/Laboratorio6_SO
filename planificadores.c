@@ -44,15 +44,7 @@ void fcfs(Proceso procesos[], int n) {
     double sum_response = 0, sum_turnaround = 0, sum_waiting = 0;
     
     for (int i = 0; i < n; i++) {
-        printf("%2d | %7d | %6d | %6d | %3d | %9d | %7d | %6d\n",
-               resultados[i].id,
-               resultados[i].arrival_time,
-               resultados[i].burst_time,
-               resultados[i].start_time,
-               resultados[i].finish_time,
-               resultados[i].response_time,
-               resultados[i].turnaround_time,
-               resultados[i].waiting_time);
+        printf("%2d | %7d | %6d | %6d | %3d | %9d | %7d | %6d\n", resultados[i].id, resultados[i].arrival_time, resultados[i].burst_time, resultados[i].start_time, resultados[i].finish_time, resultados[i].response_time, resultados[i].turnaround_time, resultados[i].waiting_time);
         sum_response += resultados[i].response_time;
         sum_turnaround += resultados[i].turnaround_time;
         sum_waiting += resultados[i].waiting_time;
@@ -74,7 +66,7 @@ void fcfs(Proceso procesos[], int n) {
 
     printf("Average Waiting Time: %.2f\n", sum_waiting / n);
     printf("Average Turnaround Time: %.2f\n", sum_turnaround / n);
-}
+} 
 
 /*============================================================================================*/
 /*======================================= SJF ================================================*/
@@ -132,15 +124,7 @@ void sjf(Proceso procesos[], int n) {
     printf("---------------------------------------------------------------\n");
     double sum_response = 0, sum_turnaround = 0, sum_waiting = 0;
     for (int i = 0; i < n; i++) {
-        printf("%2d | %7d | %6d | %6d | %3d | %9d | %7d | %6d\n",
-               resultados[i].id,
-               resultados[i].arrival_time,
-               resultados[i].burst_time,
-               resultados[i].start_time,
-               resultados[i].finish_time,
-               resultados[i].response_time,
-               resultados[i].turnaround_time,
-               resultados[i].waiting_time);
+        printf("%2d | %7d | %6d | %6d | %3d | %9d | %7d | %6d\n", resultados[i].id, resultados[i].arrival_time, resultados[i].burst_time, resultados[i].start_time, resultados[i].finish_time, resultados[i].response_time, resultados[i].turnaround_time, resultados[i].waiting_time);
         sum_response += resultados[i].response_time;
         sum_turnaround += resultados[i].turnaround_time;
         sum_waiting += resultados[i].waiting_time;
@@ -226,15 +210,7 @@ void stcf(Proceso procesos[], int n) {
     printf("---------------------------------------------------------------\n");
     double sum_response = 0, sum_turnaround = 0, sum_waiting = 0;
     for (int i = 0; i < n; i++) {
-        printf("%2d | %7d | %6d | %6d | %3d | %9d | %7d | %6d\n",
-               resultados[i].id,
-               resultados[i].arrival_time,
-               resultados[i].burst_time,
-               resultados[i].start_time,
-               resultados[i].finish_time,
-               resultados[i].response_time,
-               resultados[i].turnaround_time,
-               resultados[i].waiting_time);
+        printf("%2d | %7d | %6d | %6d | %3d | %9d | %7d | %6d\n", resultados[i].id, resultados[i].arrival_time, resultados[i].burst_time, resultados[i].start_time, resultados[i].finish_time, resultados[i].response_time, resultados[i].turnaround_time, resultados[i].waiting_time);
         sum_response += resultados[i].response_time;
         sum_turnaround += resultados[i].turnaround_time;
         sum_waiting += resultados[i].waiting_time;
@@ -270,7 +246,8 @@ void round_robin(Proceso procesos[], int n, int quantum)
     int procesos_restantes = n;
     int en_cola[MAX_PROCESOS] = {0};
     int cola[1000];
-    int frente = 0, fin = 0;
+    int frente = 0;
+    int fin = 0;
     int gantt[1000];
     memset(gantt, -1, sizeof(gantt));
 
@@ -361,15 +338,7 @@ void round_robin(Proceso procesos[], int n, int quantum)
     double sum_response = 0, sum_turnaround = 0, sum_waiting = 0;
     for (int i = 0; i < n; i++)
     {
-        printf("%2d | %7d | %6d | %6d | %3d | %9d | %7d | %6d\n",
-               resultados[i].id,
-               resultados[i].arrival_time,
-               resultados[i].burst_time,
-               resultados[i].start_time,
-               resultados[i].finish_time,
-               resultados[i].response_time,
-               resultados[i].turnaround_time,
-               resultados[i].waiting_time);
+        printf("%2d | %7d | %6d | %6d | %3d | %9d | %7d | %6d\n", resultados[i].id, resultados[i].arrival_time, resultados[i].burst_time, resultados[i].start_time, resultados[i].finish_time, resultados[i].response_time, resultados[i].turnaround_time, resultados[i].waiting_time);
         sum_response += resultados[i].response_time;
         sum_turnaround += resultados[i].turnaround_time;
         sum_waiting += resultados[i].waiting_time;
